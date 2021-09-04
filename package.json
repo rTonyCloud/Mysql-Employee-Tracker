@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "install": "^0.13.0"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "organization-employee-tracker",
+  "description": "Tracks employee data and information",
+  "version": "1.0.0",
+  "main": "server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rTonyCloud/Mysql-Employee-Tracker.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rTonyCloud/Mysql-Employee-Tracker/issues"
+  },
+  "homepage": "https://github.com/rTonyCloud/Mysql-Employee-Tracker#readme"
+}
