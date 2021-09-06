@@ -3,24 +3,8 @@ const db = require('./db/connection');
 const {prompt} = require("inquirer");
 const logo = require("asciiart-logo");
 const cTable = require("console.table");
-const Query = require("./libs/inputDB")
-
-const PORT = process.env.PORT || 3003;
-const app = express();
-
-// Express middleware
-app.use(express.urlencoded({
-  extended: false
-}));
-app.use(express.json());
-
-// Use apiRoute
-// app.use('/api', apiRoutes);
-
-// Default response for any other request (Not Found)
-app.use((req, res) => {
-  res.status(404).end();
-});
+const Query = require("./libs/inputDB");
+const { connect } = require('./db/connection');
 
 
 const logoText = logo({
@@ -28,6 +12,10 @@ const logoText = logo({
 }).render();
 console.log(logoText)
 
+db.connect(err => {
+  if (err) throw err;
+  startApp();
+})
 
 function startApp() {
   prompt([{
@@ -79,10 +67,19 @@ function startApp() {
       let choice = res.choice
       switch (choice) {
         case 'VIEW_EMPLOYEES':
-          q.findA
+          db.query("select * FROM employee", function(err, employee_row){
+            if (err) throw err
+            console.table(employee_row)
+            startApp()
+          })
+
           break;
         case 'VIEW_EMPLOYEES_DEPT':
-          console.log('view employees department');
+          db.query("select * FROM employee_db.department", function(err, employee_dept){
+            if (err) throw err
+            console.table(employee_dept)
+            startApp()
+          })
           break;
         case 'VIEW_EMPLOYEES_BY_MGR':
           console.log('view employees by manager selected');
@@ -100,20 +97,24 @@ function startApp() {
           console.log('update employees manager');
           break;
         case 'VIEW_ALL_ROLES':
-          console.log('view all roles selected!');
+          db.query("select * FROM employee_db.roles", function(err, employee_roles){
+            if (err) throw err
+            console.table(employee_roles)
+            startApp()
+          })
           break;
         case 'REMOVE_EMPLOYEES_ROLES':
           console.log('remove employees selected');
         default:
           console.log('default');
           break;
-        case 'Exit_application':
-          connection.end();
+        case 'EXIT_APPLICATION':
+          db.end();
       }
     }
 )};
 
-startApp();
+
 
 // WHEN I choose to add a department
 // THEN I am prompted to enter the name of the department and that department is added to the database
