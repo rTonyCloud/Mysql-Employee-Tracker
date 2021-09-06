@@ -1,6 +1,11 @@
 {
   "dependencies": {
-    "install": "^0.13.0"
+    "asciiart-logo": "^0.2.6",
+    "console.table": "^0.10.0",
+    "express": "^4.17.1",
+    "inquirer": "^8.1.2",
+    "install": "^0.13.0",
+    "mysql2": "^2.3.0"
   },
   "scripts": {
     "start": "node server.js"
@@ -9,7 +14,6 @@
   "description": "Tracks employee data and information",
   "version": "1.0.0",
   "main": "server.js",
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rTonyCloud/Mysql-Employee-Tracker.git"
