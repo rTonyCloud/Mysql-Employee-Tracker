@@ -59,6 +59,11 @@ function startApp() {
           value: 'REMOVE_EMPLOYEES_ROLES'
         },
         {
+          name: 'Remove Departments',
+          value: 'REMOVE_DDEPARTMENT'
+        },
+        
+        {
           name: 'Exit Application',
           value: 'EXIT_APPLICATION'
         }
@@ -129,7 +134,7 @@ function startApp() {
           })
           break;
         case 'REMOVE_EMPLOYEES_ROLES':
-          db.query("DELETE ", function(err, employee_RemoveRoles){
+          db.query("DELETE", function(err, employee_RemoveRoles){
             if (err) throw err
             console.table(employee_RemoveRoles)
             startApp()
