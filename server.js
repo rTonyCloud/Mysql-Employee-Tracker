@@ -75,7 +75,7 @@ function startApp() {
           break;
 
         case 'VIEW_EMPLOYEES_DEPT':
-          db.query("SELECT * employee(empl", function(err, employee_dept){
+          db.query("SELECT * FROM department JOIN roles ON department_id = department.id", function(err, employee_dept){
             if (err) throw err
             console.table(employee_dept)
             startApp()
@@ -83,7 +83,7 @@ function startApp() {
           break;
 
         case 'VIEW_EMPLOYEES_BY_MGR':
-          db.query("", function(err, employee_ByMgr){
+          db.query("SELECT worker.first_name, worker.last_name, manager.first_name, manager.last_name FROM employee AS worker JOIN employee AS manager ON worker.manager_id = manager.id", function(err, employee_ByMgr){
             if (err) throw err
             console.table(employee_ByMgr)
             startApp()
@@ -91,7 +91,7 @@ function startApp() {
           break;
 
         case 'VIEW_NEW_EMPLOYEES':
-          db.query("", function(err, employee_NewEmploy){
+          db.query("INSERT ", function(err, employee_NewEmploy){
             if (err) throw err
             console.table(employee_NewEmploy)
             startApp()
@@ -99,25 +99,25 @@ function startApp() {
           break;
 
         case 'REMOVE_EMPLOYEES':
-          db.query("", function(err, employee_NewEmploy){
+          db.query("DELETE FROM employee WHERE employee_id ? ", function(err, REMOVE_EMPLOYEES){
             if (err) throw err
-            console.table(employee_NewEmploy)
+            console.table(REMOVE_EMPLOYEES)
             startApp()
           })
           break;
 
         case 'UPDATE_EMPLOYEES_ROLES':
-          db.query("", function(err, employee_NewEmploy){
+          db.query("UPDATE ", function(err, UPDATE_EMPLOYEES_ROLES){
             if (err) throw err
-            console.table(employee_NewEmploy)
+            console.table(UPDATE_EMPLOYEES_ROLES)
             startApp()
           })
           break;
 
         case 'UPDATE_EMPLOYEES_MGR':
-          db.query("", function(err, employee_NewEmploy){
+          db.query("UPDATE ", function(err, UPDATE_EMPLOYEES_MGR){
             if (err) throw err
-            console.table(employee_NewEmploy)
+            console.table(UPDATE_EMPLOYEES_MGR)
             startApp()
           })
           break;
@@ -129,7 +129,7 @@ function startApp() {
           })
           break;
         case 'REMOVE_EMPLOYEES_ROLES':
-          db.query("", function(err, employee_RemoveRoles){
+          db.query("DELETE ", function(err, employee_RemoveRoles){
             if (err) throw err
             console.table(employee_RemoveRoles)
             startApp()
@@ -143,43 +143,7 @@ function startApp() {
     }
 )};
 
-// Update an employee 
-  const sql = `UPDATE candidates SET party_id = ? 
-               WHERE id = ?`;
-  const params = [req.body.party_id, req.params.id];
-  db.query(sql, params, (err, result) => {
-    if (err) throw err;
-        // check if a record was found
-    } else if (!result.affectedRows) {
-      res.json({
-        message: 'Candidate not found'
-      });
-    } else {
-      res.json({
-        message: 'success',
-        data: req.body,
-        changes: result.affectedRows
-      });
-    }
-  });
-});
 
-// Update a candidate's party
-  db.query(sql, params, (err, result) => {
-    if (err) throw err; {;
-      // check if a record was found
-    } else if (!result.affectedRows) {
-      res.json({
-        message: 'Candidate not found'
-      });
-    } else {
-      res.json({
-        message: 'success',
-        data: req.body,
-        changes: result.affectedRows
-      });
-    }
-  });
 
 // WHEN I choose to view all departments
 // THEN I am presented with a formatted table showing department names and department ids
