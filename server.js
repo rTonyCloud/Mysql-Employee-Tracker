@@ -5,6 +5,7 @@ const logo = require("asciiart-logo");
 const cTable = require("console.table");
 const Query = require("./libs/inputDB");
 const { connect } = require('./db/connection');
+const inquirer = require('inquirer');
 
 
 const logoText = logo({
@@ -104,7 +105,7 @@ function startApp() {
           break;
 
         case 'REMOVE_EMPLOYEES':
-          db.query("DELETE FROM employee WHERE employee_id ? ", function(err, REMOVE_EMPLOYEES){
+          db(addpromise).query("DELETE FROM employee WHERE employee_id ? ", function(err, REMOVE_EMPLOYEES){
             if (err) throw err
             console.table(REMOVE_EMPLOYEES)
             startApp()
@@ -134,11 +135,33 @@ function startApp() {
           })
           break;
         case 'REMOVE_EMPLOYEES_ROLES':
-          db.query("DELETE", function(err, employee_RemoveRoles){
-            if (err) throw err
-            console.table(employee_RemoveRoles)
-            startApp()
+          
+          db.promise().query("SELECT * FROM employee_db.roles")
+          .then( ([rows,fields]) => {
+            // db.promise.query("SELECT * FROM employee_db.roles ", function(err, employee_RemoveRoles){
+            //   if (err) throw err
+            //   console.table(employee_RemoveRoles)
+            //   startApp()
+            // })
+            console.log(rows);
+            prompt({
+              type: 'list',
+              name: 'choice',
+              message: "What would you like to do?",
+              choices: title.map(({row} => row),
+            })
+
+             
           })
+          .catch(console.log)
+        
+          break;
+          case 'REMOVE_DEPARTMENTS':
+            db.promise.query("DELETE", function(err, employee_RemoveDepartments){
+              if (err) throw err
+              console.table(employee_RemoveDepartments)
+              startApp()
+            })
         default:
           console.log('default');
           break;
@@ -148,6 +171,7 @@ function startApp() {
     }
 )};
 
+// first query all employees * select employee, CREATE A LIST for the user to select from that would be inside the return of the promise
 
 
 // WHEN I choose to view all departments

@@ -1,12 +1,12 @@
 -- when the program runs sql will autogen the seeds of info
 
 -- department table inserted with several departments
-INSERT INTO department (id, name)
+INSERT INTO department (id, department_name)
 
 VALUES ("Sales"), ("Engineering"), ("Finance"), ("Marketing");
 
 -- roles table inserted with several roles 
-INSERT INTO Roles (title, salary, department)
+INSERT INTO Roles (title, salary, department_name)
 
 VALUES ("Sales Engineer", 120000, 1), ("Sales Consultant", 850000, 1), 
 ("Cloud Engineer", 130000, 2), ("Software Engineer", 130000, 2), 
