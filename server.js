@@ -36,12 +36,20 @@ function startApp() {
           value: 'VIEW_EMPLOYEES_BY_MGR'
         },
         {
-          name: 'All Roles',
+          name: 'View All Roles',
           value: 'VIEW_ALL_ROLES'
         },
         {
+          name: 'Add New Role',
+          value: 'ADD_NEW_ROLE'
+        },
+        {
           name: 'Add New Employee',
-          value: 'VIEW_NEW_EMPLOYEES'
+          value: 'ADD_NEW_EMPLOYEE'
+        },
+        {
+          name: 'Add New Departments',
+          value: 'ADD_NEW_DEPARTMENTS'
         },
         {
           name: 'Update Employee Role',
@@ -61,13 +69,16 @@ function startApp() {
         },
         {
           name: 'Remove Departments',
-          value: 'REMOVE_DDEPARTMENT'
+          value: 'REMOVE_DEPARTMENT'
         },
-        
+        {
+          name: 'View Total Budget',
+          value: 'VIEW_TOTAL_BUDGET'
+        },
         {
           name: 'Exit Application',
           value: 'EXIT_APPLICATION'
-        }
+        },
       ]
     }]).then(res => {
       let choice = res.choice
@@ -80,6 +91,7 @@ function startApp() {
           })
           break;
 
+
         case 'VIEW_EMPLOYEES_DEPT':
           db.query("SELECT * FROM department JOIN roles ON department_id = department.id", function(err, employee_dept){
             if (err) throw err
@@ -87,7 +99,6 @@ function startApp() {
             startApp()
           })
           break;
-
         case 'VIEW_EMPLOYEES_BY_MGR':
           db.query("SELECT worker.first_name, worker.last_name, manager.first_name, manager.last_name FROM employee AS worker JOIN employee AS manager ON worker.manager_id = manager.id", function(err, employee_ByMgr){
             if (err) throw err
@@ -95,25 +106,23 @@ function startApp() {
             startApp()
           })
           break;
-
+       case 'VIEW_ALL_ROLES':
+          db.query("select * FROM employee_db.roles", function(err, employee_roles){
+            if (err) throw err
+            console.table(employee_roles)
+            startApp()
+          })
+          break;
         case 'VIEW_NEW_EMPLOYEES':
-          db.query("INSERT ", function(err, employee_NewEmploy){
+          db.query("SELECT * FROM department JOIN roles ON department_id = department.id", function(err, employee_NewEmploy){
             if (err) throw err
             console.table(employee_NewEmploy)
             startApp()
           })
           break;
 
-        case 'REMOVE_EMPLOYEES':
-          db(addpromise).query("DELETE FROM employee WHERE employee_id ? ", function(err, REMOVE_EMPLOYEES){
-            if (err) throw err
-            console.table(REMOVE_EMPLOYEES)
-            startApp()
-          })
-          break;
-
         case 'UPDATE_EMPLOYEES_ROLES':
-          db.query("UPDATE ", function(err, UPDATE_EMPLOYEES_ROLES){
+          db.query("SELECT * FROM department JOIN roles ON department_id = department.id", function(err, UPDATE_EMPLOYEES_ROLES){
             if (err) throw err
             console.table(UPDATE_EMPLOYEES_ROLES)
             startApp()
@@ -121,21 +130,20 @@ function startApp() {
           break;
 
         case 'UPDATE_EMPLOYEES_MGR':
-          db.query("UPDATE ", function(err, UPDATE_EMPLOYEES_MGR){
+          db.query("SELECT * FROM department JOIN roles ON department_id = department.id", function(err, UPDATE_EMPLOYEES_MGR){
             if (err) throw err
             console.table(UPDATE_EMPLOYEES_MGR)
             startApp()
           })
           break;
-        case 'VIEW_ALL_ROLES':
-          db.query("select * FROM employee_db.roles", function(err, employee_roles){
-            if (err) throw err
-            console.table(employee_roles)
-            startApp()
-          })
-          break;
+          case 'REMOVE_EMPLOYEES':
+            db.query("SELECT * FROM department JOIN roles ON department_id = department.id", function(err, REMOVE_EMPLOYEES){
+              if (err) throw err
+              console.table(REMOVE_EMPLOYEES)
+              startApp()
+            })
+            break;
         case 'REMOVE_EMPLOYEES_ROLES':
-          
           db.promise().query("SELECT * FROM employee_db.roles")
           .then( ([rows,fields]) => {
             // db.promise.query("SELECT * FROM employee_db.roles ", function(err, employee_RemoveRoles){
@@ -144,26 +152,33 @@ function startApp() {
             //   startApp()
             // })
             console.log(rows);
-            prompt({
-              type: 'list',
-              name: 'choice',
-              message: "What would you like to do?",
-              choices: title.map(({row} => row),
-            })
-
-             
+            // prompt({
+            //   type: 'list',
+            //   name: 'choice',
+            //   message: "What would you like to do?",
+            //   choices: "apples, oranges",
+            // })
+            startApp();
           })
           .catch(console.log)
         
-          break;
+            break;
           case 'REMOVE_DEPARTMENTS':
-            db.promise.query("DELETE", function(err, employee_RemoveDepartments){
+            db.promise.query("SELECT * FROM department JOIN roles ON department_id = department.id", function(err, employee_RemoveDepartments){
               if (err) throw err
               console.table(employee_RemoveDepartments)
               startApp()
             })
+            break;
+          case 'VIEW_TOTAL_BUDGET':
+            db.query("SELECT * FROM department JOIN roles ON department_id = department.id", function(err, VIEW_TOTAL_BUDGET){
+              if (err) throw err
+              console.table(VIEW_TOTAL_BUDGET)
+              startApp();
+            })
+            break;
         default:
-          console.log('default');
+            startApp();
           break;
         case 'EXIT_APPLICATION':
           db.end();
